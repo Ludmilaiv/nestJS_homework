@@ -23,16 +23,20 @@ export class NewsService {
   create(news: News): News {
     const id = getRandom(0, 99999);
 
-    const filalNews = {
+    const finalNews = {
       ...news,
       id: id,
     }
-    this.news.push(filalNews);
-    return filalNews;
+    this.news.push(finalNews);
+    return finalNews;
   }
 
   find(id: News['id']): News | undefined {
     return this.news.find((news) => news.id === id);
+  }
+
+  getAll(): News[] {
+    return this.news;
   }
 
   remove(id: News['id']): Boolean {
@@ -43,5 +47,19 @@ export class NewsService {
     } 
     return false;
     
+  }
+
+  edit(id: News['id'], news: Pick<News, 'title' | 'description' | 'countViews' | 'author'>): boolean {
+    const indexEditNews = this.news.findIndex((news) => news.id === id);
+    const finalNews = {
+      ...this.news[indexEditNews],
+      ...news,
+    }
+    if (indexEditNews !== -1) {
+      this.news.splice(indexEditNews, 1);
+      this.news.push(finalNews);
+      return true;
+    } 
+    return false;
   }
 }

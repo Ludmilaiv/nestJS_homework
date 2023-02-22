@@ -14,6 +14,11 @@ export class NewsController {
     return this.newsService.find(idInt);
   }
 
+  @Get()
+  getAllNews(): News[] {
+    return this.newsService.getAll();
+  }
+
   @Post()
   create(@Body() news: News): News {
     return this.newsService.create(news);
@@ -24,6 +29,16 @@ export class NewsController {
     let idInt = parseInt(id);
     const isRemoved = this.newsService.remove(idInt);
     return isRemoved ? 'Новость удалена' : 'Передан не верный id'
+  }
+
+  @Post('/:id')
+  edit(
+    @Param('id') id: string,
+    @Body() news: Pick<News, 'title' | 'description' | 'countViews' | 'author'>
+    ): string {
+    let idInt = parseInt(id);
+    const editNews = this.newsService.edit(idInt, news);
+    return editNews ? 'Новость изменена' : 'Передан не верный id';
   }
 
 }
