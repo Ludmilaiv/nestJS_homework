@@ -4,6 +4,8 @@ import { News, NewsService } from './news.service';
 import { htmlTemplate } from '../views/template';
 import { newsTemplate } from '../views/news';
 import { CommentsService } from './comments/comments.service';
+import { NewsIdDto } from './dtos/news-id.dto/news-id.dto';
+import { NewsCreateDto } from './dtos/news-create.dto/news-create.dto';
 
 @Controller('news')
 export class NewsController {
@@ -13,8 +15,8 @@ export class NewsController {
   ) {}
 
   @Get('/:id')
-  getNews(@Param('id') id: string): News {
-    const idInt = parseInt(id);
+  getNews(@Param('id') params: NewsIdDto): News {
+    const idInt = parseInt(params.id);
     return this.newsService.find(idInt);
   }
 
@@ -24,15 +26,16 @@ export class NewsController {
   }
 
   @Post()
-  create(@Body() news: News): News {
+  create(@Body() news: NewsCreateDto): News {
     return this.newsService.create(news);
   }
 
   @Delete('/:id')
-  remove(@Param('id') id: string): string {
-    const idInt = parseInt(id);
+  remove(@Param('id') params: NewsIdDto): string {
+    const idInt = parseInt(params.id);
     const isRemoved =
-      this.newsService.remove(idInt) && this.commentService.removeAll(id);
+      this.newsService.remove(idInt) &&
+      this.commentService.removeAll(params.id);
     return isRemoved ? 'Новость удалена' : 'Передан не верный id';
   }
 

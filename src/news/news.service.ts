@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { NewsCreateDto } from './dtos/news-create.dto/news-create.dto';
 
 export interface News {
   id?: number;
   title: string;
   description: string;
   author: string;
-  countViews: number;
+  countViews?: number;
 }
 
 function getRandom(min: number, max: number): number {
@@ -26,7 +27,7 @@ export class NewsService {
     },
   ];
 
-  create(news: News): News {
+  create(news: NewsCreateDto): News {
     const id = getRandom(0, 99999);
 
     const finalNews = {
