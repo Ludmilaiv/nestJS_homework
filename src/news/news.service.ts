@@ -5,7 +5,7 @@ export interface News {
   title: string;
   description: string;
   author: string;
-  countViews: number
+  countViews: number;
 }
 
 function getRandom(min: number, max: number): number {
@@ -17,7 +17,13 @@ function getRandom(min: number, max: number): number {
 @Injectable()
 export class NewsService {
   private readonly news: News[] = [
-    {id: 1, title: "News#1", description: "lorem lorem", author: "Author", countViews: 0}
+    {
+      id: 1,
+      title: 'News#1',
+      description: 'lorem lorem',
+      author: 'Author',
+      countViews: 0,
+    },
   ];
 
   create(news: News): News {
@@ -26,7 +32,7 @@ export class NewsService {
     const finalNews = {
       ...news,
       id: id,
-    }
+    };
     this.news.push(finalNews);
     return finalNews;
   }
@@ -39,27 +45,29 @@ export class NewsService {
     return this.news;
   }
 
-  remove(id: News['id']): Boolean {
+  remove(id: News['id']): boolean {
     const indexRemoveNews = this.news.findIndex((news) => news.id === id);
     if (indexRemoveNews !== -1) {
       this.news.splice(indexRemoveNews, 1);
       return true;
-    } 
+    }
     return false;
-    
   }
 
-  edit(id: News['id'], news: Pick<News, 'title' | 'description' | 'countViews' | 'author'>): boolean {
+  edit(
+    id: News['id'],
+    news: Pick<News, 'title' | 'description' | 'countViews' | 'author'>,
+  ): boolean {
     const indexEditNews = this.news.findIndex((news) => news.id === id);
     const finalNews = {
       ...this.news[indexEditNews],
       ...news,
-    }
+    };
     if (indexEditNews !== -1) {
       this.news.splice(indexEditNews, 1);
       this.news.push(finalNews);
       return true;
-    } 
+    }
     return false;
   }
 }
