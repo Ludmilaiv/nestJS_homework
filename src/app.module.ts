@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { AppService } from './app.service';
 import { NewsModule } from './news/news.module';
-import { CalcModule } from './calc/calc.module';
 import { join } from 'path';
 import { MailModule } from './mail/mail.module';
 

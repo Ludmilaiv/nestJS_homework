@@ -7,8 +7,6 @@ import {
   Post,
   UploadedFile,
   UseInterceptors,
-  Render,
-  Res,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -24,13 +22,6 @@ import { MailService } from '../mail/mail.service';
 const PATH_NEWS = '/news-static/';
 const helperFileLoader = new HelperFileLoader();
 helperFileLoader.path = PATH_NEWS;
-const imageFileFilter = (req, file, callback) => {
-  const fileExtension = file.originalname.split('.').reverse()[0];
-  if (!fileExtension || !fileExtension.match(/(jpg|jpeg|png|gif)$/)) {
-    callback(new Error('Excepted image'), false);
-  }
-  callback(null, true);
-};
 
 @Controller('news')
 export class NewsController {

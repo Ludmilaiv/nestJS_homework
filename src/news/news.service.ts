@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { NewsCreateDto } from './dtos/news-create.dto/news-create.dto';
 
 export interface News {
   id?: number;
