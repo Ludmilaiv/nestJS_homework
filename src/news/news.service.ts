@@ -7,6 +7,7 @@ export interface News {
   description: string;
   author: string;
   countViews?: number;
+  cover?: string;
 }
 
 function getRandom(min: number, max: number): number {
@@ -27,7 +28,7 @@ export class NewsService {
     },
   ];
 
-  create(news: NewsCreateDto): News {
+  create(news: News): News {
     const id = getRandom(0, 99999);
 
     const finalNews = {
